@@ -40,33 +40,33 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
     <div class="container">
-      <a class="navbar-brand" href="#">HealthExchange</a>
+      <a class="navbar-brand" href="/index">HealthExchange</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
-    {% if username %}
-      <li class="nav-item">
-          <a class="nav-link" href="/requestaid">Request aid</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/sendaid">Send aid</a>
-      </li>
-      <li class="nav-item">
-          <a class="nav-link" href="/info">Information</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/logout">Logout: {{ username }} </a>
-      </li>
-	  {% else %}
-          <li class="nav-item">
-            <a class="nav-link" href="#">Registration</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Login</a>
-          </li>
-	  {% endif %}
+          {% if username %}
+            <li class="nav-item">
+                <a class="nav-link" href="/requestaid">Request aid</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Send aid</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/info">Information</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">Logout: {{ username }} </a>
+            </li>
+      	  {% else %}
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Registration</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Login</a>
+                </li>
+      	  {% endif %}
         </ul>
       </div>
     </div>
@@ -77,57 +77,23 @@
     <div class="container">
       <div class="row align-items-center">
         <div class="col-lg-6 order-lg-2">
-          <div class="p-5">
-            <img class="img-fluid rounded-circle" src="{{ url_for('static',filename='pics/icon1.jpg') }}" alt="">
-          </div>
         </div>
         <div class="col-lg-6 order-lg-1">
           <div class="p-5">
-            <h2 class="display-4" style="color: #75407a">Request aid</h2>
-            <p style="text-align: justify;">If you are in need of medical equipment, staff or anything else, go to the 'Request Aid' tab. You may ask for anything, which might be helpful, ex. face masks, needles, surgical equipment, etc.</p>
+            <h2 class="display-4" style="color: #75407a">Send help</h2>
+            <p style="text-align: justify;">Contact these medical institutions if you can help them!<br/><br/></p>
+            {% for event in events %}
+            <h3>{{ event[5] }}     -     {{ event[6] }}</h3>
+            <h4>{{ event[0] }}, {{ event[7] }}</h4>
+            <p>{{ event[4] }}</p>
+            <b>Contact:</b> <a href="mailto:{{event[1]}}">{{ event[1] }}</a>, {{ event[2] }}
+            <hr/>
+            {% endfor %}
           </div>
         </div>
       </div>
     </div>
   </section>
-
-  <section>
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col-lg-6">
-          <div class="p-5">
-            <img class="img-fluid rounded-circle" src="{{ url_for('static',filename='pics/icon2.jpg') }}" alt="">
-          </div>
-        </div>
-        <div class="col-lg-6">
-          <div class="p-5">
-            <h2 class="display-4" style="color: #75407a">Send aid</h2>
-            <p style="text-align: justify;">If you have an abundance of suplies or just want to help a different medical institution visit this tab.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col-lg-6 order-lg-2">
-          <div class="p-5">
-            <img class="img-fluid rounded-circle" src="{{ url_for('static',filename='pics/icon3.jpg') }}" alt="">
-          </div>
-        </div>
-        <div class="col-lg-6 order-lg-1">
-          <div class="p-5">
-            <h2 class="display-4" style="color: #75407a">Important information</h2>
-            <p style="text-align: justify;">This is the tab, where important medical information from around the world appears. You can also post your own information or tips for medical staff, which you find might be helpful</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-
 
   <!-- Footer -->
   <footer class="py-5 bg-black">

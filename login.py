@@ -17,8 +17,8 @@ def createdb():
     db = sqlite3.connect("healthexchange.db")
     cursor = db.cursor()
     cursor.execute('''CREATE TABLE IF NOT EXISTS users(name TEXT,password TEXT,desc TEXT,mail TEXT,phone TEXT, country TEXT, city TEXT)''')
-    cursor.execute('''CREATE TABLE IF NOT EXISTS help(desc TEXT,mail TEXT,phone TEXT, country TEXT,message TEXT)''')
-    cursor.execute('''CREATE TABLE IF NOT EXISTS info(desc TEXT,mail TEXT,phone TEXT, country TEXT,message TEXT)''')
+    cursor.execute('''CREATE TABLE IF NOT EXISTS aid(hospital TEXT,mail TEXT,phone TEXT, country TEXT,message TEXT,title TEXT, date TEXT, city TEXT)''')
+    cursor.execute('''CREATE TABLE IF NOT EXISTS info(hospital TEXT,mail TEXT,phone TEXT,message TEXT, title TEXT, date TEXT)''')
     db.commit()
     db.close()
 

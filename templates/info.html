@@ -33,6 +33,27 @@
    <!-- Easy-Button -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css">
   <script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
+
+  <style>
+  input[type=text] {
+    border: 3px solid #ddd;
+    width: 500px;
+  }
+  input[type=text]:focus {
+    border: 3px solid #555;
+  }
+  textarea{
+    border: 3px solid #ddd;
+    width: 500px;
+    height: 150px;
+  }
+  input[type=submit]{
+    background-color: purple;
+    width: 150px;
+    font-size: 25px;
+    color: white;
+  }
+  </style>
 </head>
 
 <body>
@@ -40,7 +61,7 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
     <div class="container">
-      <a class="navbar-brand" href="#">HealthExchange</a>
+      <a class="navbar-brand" href="/index">HealthExchange</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -54,7 +75,7 @@
         <a class="nav-link" href="/sendaid">Send aid</a>
       </li>
       <li class="nav-item">
-          <a class="nav-link" href="/info">Information</a>
+          <a class="nav-link" href="#">Information</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/logout">Logout: {{ username }} </a>
@@ -77,14 +98,17 @@
     <div class="container">
       <div class="row align-items-center">
         <div class="col-lg-6 order-lg-2">
-          <div class="p-5">
-            <img class="img-fluid rounded-circle" src="{{ url_for('static',filename='pics/icon1.jpg') }}" alt="">
-          </div>
         </div>
         <div class="col-lg-6 order-lg-1">
           <div class="p-5">
-            <h2 class="display-4" style="color: #75407a">Request aid</h2>
-            <p style="text-align: justify;">If you are in need of medical equipment, staff or anything else, go to the 'Request Aid' tab. You may ask for anything, which might be helpful, ex. face masks, needles, surgical equipment, etc.</p>
+            <h2 class="display-4" style="color: #75407a">Post information<br/></h2><br/><br/>
+              <form action="{{ url_for('handle_info') }}" method="post">
+                <h3><label for="title">Title</label></h3><br/>
+                <input type="text" name="title" placeholder="  Title" required><br />
+                <h3><br/><label for="description">Description</label></h3>
+                <textarea name="description" placeholder="Describe your findings here!" required></textarea><br/><br/>
+                <input type="submit" value="Submit" width="100px">
+              </form>
           </div>
         </div>
       </div>
@@ -95,39 +119,25 @@
     <div class="container">
       <div class="row align-items-center">
         <div class="col-lg-6">
-          <div class="p-5">
-            <img class="img-fluid rounded-circle" src="{{ url_for('static',filename='pics/icon2.jpg') }}" alt="">
-          </div>
         </div>
         <div class="col-lg-6">
           <div class="p-5">
-            <h2 class="display-4" style="color: #75407a">Send aid</h2>
-            <p style="text-align: justify;">If you have an abundance of suplies or just want to help a different medical institution visit this tab.</p>
+            <h2 class="display-4" style="color: #75407a">Browse information</h2>
+            <p style="text-align: justify;">Browse the information provided by these, felow medical institutions:<br/><br/></p>
+            {% for event in events %}
+            <h3>{{ event[5] }}</h3>
+            <br />
+            <h3>{{ event[4] }}</h3>
+            <h4>{{ event[0] }}</h4>
+            <p>{{ event[3] }}</p>
+            <b>Contact:</b> <a href="mailto:{{event[1]}}">{{ event[1] }}</a>, {{ event[2] }}
+            <hr/>
+            {% endfor %}
           </div>
         </div>
       </div>
     </div>
   </section>
-
-  <section>
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col-lg-6 order-lg-2">
-          <div class="p-5">
-            <img class="img-fluid rounded-circle" src="{{ url_for('static',filename='pics/icon3.jpg') }}" alt="">
-          </div>
-        </div>
-        <div class="col-lg-6 order-lg-1">
-          <div class="p-5">
-            <h2 class="display-4" style="color: #75407a">Important information</h2>
-            <p style="text-align: justify;">This is the tab, where important medical information from around the world appears. You can also post your own information or tips for medical staff, which you find might be helpful</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-
 
   <!-- Footer -->
   <footer class="py-5 bg-black">

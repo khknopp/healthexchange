@@ -1,6 +1,7 @@
 import os, os.path, random, hashlib, sys, json
 from flask import Flask, flash, render_template, redirect, request, url_for, jsonify, session, Response
 from login import signup_f, login_f
+from aid import *
 
 app = Flask(__name__)
 app.secret_key = '9je0jaj09jk9dkakdwjnjq'
@@ -16,6 +17,43 @@ def main():
 def index():
     if 'username' in session:
         return render_template('index.html', username = session.get('username'))
+    else:
+        return redirect(url_for('login'))
+
+@app.route('/info')
+def info():
+    if 'username' in session:
+        return render_template('info.html', username = session.get('username'), events=get_info(session.get('username')))
+    else:
+        return redirect(url_for('login'))
+
+@app.route('/handle_aid', methods=['GET','POST'])
+def handle_aid():
+    title = request.form['title']
+    description = request.form['description']
+    user = session.get('username')
+    create_aid(user,title,description)
+    return redirect(url_for('requestaid'))
+
+@app.route('/handle_info', methods=['GET','POST'])
+def handle_info():
+    title = request.form['title']
+    description = request.form['description']
+    user = session.get('username')
+    create_info(user,title,description)
+    return redirect(url_for('info'))
+
+@app.route('/requestaid')
+def requestaid():
+    if 'username' in session:
+        return render_template('requestaid.html', username = session.get('username'))
+    else:
+        return redirect(url_for('login'))
+
+@app.route('/sendaid')
+def sendaid():
+    if 'username' in session:
+        return render_template('sendaid.html', events=get_aid(session.get('username')), username=session.get('username'))
     else:
         return redirect(url_for('login'))
 
